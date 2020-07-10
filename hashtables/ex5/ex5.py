@@ -7,21 +7,21 @@ def finder(files, queries):
     directory = 0
 
     result = [] # arrray
-    filestore = {} # dictionary 
+    filenameDict = {} # dictionary 
 
     # convert to dictionary
     for path in files:
-        pathAndFilename = path.rsplit("/", 1)
-        if pathAndFilename[1] in filestore:
+        split = path.rsplit("/", 1)
+        if split[filename] in filenameDict:
             # We've got a colision 
-            filestore[pathAndFilename[1]] = filestore[pathAndFilename[1]] + ":" + pathAndFilename[0]
+            filenameDict[split[filename]] = filenameDict[split[filename]] + ":" + split[directory]
         else:
             # First time we've seen this filename 
-            filestore[pathAndFilename[1]] = pathAndFilename[0]
+            filenameDict[split[filename]] = split[directory]
     
     for candidate in queries: 
-        if candidate in filestore:
-            paths = filestore[candidate].split(":", 1)
+        if candidate in filenameDict:
+            paths = filenameDict[candidate].split(":", 1)
             for path in paths:
                 result.append(path + "/" + candidate)
 
