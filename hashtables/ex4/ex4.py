@@ -1,8 +1,23 @@
 def has_negatives(a):
-    """
-    YOUR CODE HERE
-    """
-    # Your code here
+    result = [] # arrray
+    input = {} # dictionary 
+
+    # convert to dictionary
+    # Value is True if negative number found. 
+    for number in a:
+        if number in input:
+            if number < 0:
+                input[abs(number)] = True
+        else:
+            if number < 0:
+                input[abs(number)] = True
+            else: 
+                input[number] = False
+
+
+    for theValue, foundNegative in input.items():
+        if foundNegative == True:
+            result.append(theValue)
 
     return result
 
