@@ -3,10 +3,17 @@
 
 
 def finder(files, queries):
-    """
-    YOUR CODE HERE
-    """
-    # Your code here
+    result = [] # arrray
+    store = {} # dictionary 
+
+    # convert to dictionary
+    for path in files:
+        x = path.rsplit("/", 1)
+        store[x[1]] = x[0]
+    
+    for candidate in queries: 
+        if candidate in store:
+            result.append(store[candidate] + "/" + candidate)
 
     return result
 
