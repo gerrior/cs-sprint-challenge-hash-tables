@@ -3,22 +3,27 @@
 
 
 def finder(files, queries):
+    filename = 1
+    directory = 0
+
     result = [] # arrray
-    store = {} # dictionary 
+    filestore = {} # dictionary 
 
     # convert to dictionary
     for path in files:
         pathAndFilename = path.rsplit("/", 1)
-        if pathAndFilename[1] in store:
+        if pathAndFilename[1] in filestore:
             # We've got a colision 
-            store[pathAndFilename[1]] = store[pathAndFilename[1]] + ":" + pathAndFilename[0]
+            filestore[pathAndFilename[1]] = filestore[pathAndFilename[1]] + ":" + pathAndFilename[0]
         else:
             # First time we've seen this filename 
-            store[pathAndFilename[1]] = pathAndFilename[0]
+            filestore[pathAndFilename[1]] = pathAndFilename[0]
     
     for candidate in queries: 
-        if candidate in store:
-            result.append(store[candidate] + "/" + candidate)
+        if candidate in filestore:
+            paths = filestore[candidate].split(":", 1)
+            for path in paths:
+                result.append(path + "/" + candidate)
 
     return result
 
