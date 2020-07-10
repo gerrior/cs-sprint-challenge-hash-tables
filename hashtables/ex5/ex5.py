@@ -8,8 +8,13 @@ def finder(files, queries):
 
     # convert to dictionary
     for path in files:
-        x = path.rsplit("/", 1)
-        store[x[1]] = x[0]
+        pathAndFilename = path.rsplit("/", 1)
+        if pathAndFilename[1] in store:
+            # We've got a colision 
+            store[pathAndFilename[1]] = store[pathAndFilename[1]] + ":" + pathAndFilename[0]
+        else:
+            # First time we've seen this filename 
+            store[pathAndFilename[1]] = pathAndFilename[0]
     
     for candidate in queries: 
         if candidate in store:
@@ -21,6 +26,7 @@ def finder(files, queries):
 if __name__ == "__main__":
     files = [
         '/bin/foo',
+        '/application/foo',
         '/bin/bar',
         '/usr/bin/baz'
     ]
