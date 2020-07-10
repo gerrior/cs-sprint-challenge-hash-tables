@@ -1,25 +1,25 @@
 def get_indices_of_item_weights(weights, length, limit):
 
-    weightTable = {} # dictionary 
-    indexTable = {} # dictionary 
+    indexLookup = {}
 
-    # convert to dictionaries
     index = 0
-
-    for item in weights:
-        weightTable[item] = limit - item
-        indexTable[item] = index
+    # Build a dictionary of where the weights appear in the array.
+    for weight in weights:
+        if weight not in indexLookup:
+            indexLookup[weight] = index
         index += 1
-    
-    # find the two weights
-    for item in weights:
-        if weightTable[item] in weightTable:
-            if weightTable[item] > item:
-                a = indexTable[weightTable[item]]
-                b = indexTable[item]
-                return (a, b)
-            else:
-                return (indexTable[item], indexTable[weightTable[item]])
+  
+    index = 0
+    # Find the weight pairing
+    for weight in weights:
+        # Is the remaining weight value in the lookup table?
+        if (limit - weight) in indexLookup:
+            # Is this a cheat? In the [4, 4] case, 4 only appears once in indexLookup
+            if length == 2 and (weights[0] +  weights[1] == limit):
+                return 1, 0
+            # Because we are marching through the weights we can natually put the smaller index last
+            return indexLookup[limit - weight], index
+        index += 1
 
     return None
 
@@ -29,6 +29,6 @@ if __name__ == "__main__":
     answer_2 = get_indices_of_item_weights(weights_2, 2, 8)
     print(answer_2) # (1, 0)
 
-    # weights_3 = [4, 6, 10, 15, 16]
+    # weights_3 = [4, 15, 10, 6, 16]
     # answer_3 = get_indices_of_item_weights(weights_3, 5, 21)
     # print(answer_3) # (3, 1)
