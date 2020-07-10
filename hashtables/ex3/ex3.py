@@ -1,8 +1,22 @@
 def intersection(arrays):
-    """
-    YOUR CODE HERE
-    """
-    # Your code here
+    result = [] # arrray
+    input = {} # dictionary 
+    numOfArrays = len(arrays) # Does compiler not optimize this without assignment?
+
+    # convert to dictionary
+    for array in arrays:
+        for number in array: 
+            if number in input:
+                # already in dictionary; increament that we've seen it again
+                input[number] += 1
+            else:
+                # Add to dictionary
+                input[number] = 1
+
+    
+    for number, count in input.items():
+        if count == numOfArrays:
+            result.append(number)
 
     return result
 
